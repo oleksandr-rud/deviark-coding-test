@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: coding-test.mongodb
+    environment:
+      MONGO_INITDB_DATABASE: test
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: qwerty123456
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/docker-containers/coding-test/mongo-data:/data/db
+    networks:
+      - mongo-network
+
+  mongo-express:
+    image: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_SERVER: 'mongodb'
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: qwerty123456
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: qwerty123456
+    depends_on:
+      - mongodb
+    ports:
+      - 8085:8081
+    networks:
+      - mongo-network
+
+networks:
+  mongo-network: ~
