@@ -24,7 +24,7 @@ async function bootstrap() {
   );
 
   try {
-    await app.listenAsync(process.env.APP_PORT, process.env.APP_HOST);
+    await app.listen(Number(process.env.APP_PORT), process.env.APP_HOST);
   } catch (e) {
     Logger.error(e.message);
   } finally {
